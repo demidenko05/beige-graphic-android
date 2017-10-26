@@ -7,7 +7,9 @@
   <version>1.0.0-SNAPSHOT</version>
   
   <name>Beigesoft graphic Android delegators library.</name>
+  <description>This is delegators that implements graphic logic (read image from file...) with Android.</description>
   <url>http://www.beigesoft.org</url>
+  <inceptionYear>2017</inceptionYear>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,20 +37,23 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.9.1</version>
+            <version>2.10.2</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
                 <goals>
                   <goal>jar</goal>
                 </goals>
+                <configuration>
+                  <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
               </execution>
             </executions>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -56,6 +61,10 @@
                 <goals>
                   <goal>sign</goal>
                 </goals>
+                <configuration>
+                  <keyname>48E407CA</keyname>
+                  <passphraseServerId>48E407CA</passphraseServerId>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -130,7 +139,7 @@
     <dependency>
      <groupId>org.beigesoft</groupId>
      <artifactId>beige-docwriter</artifactId>
-     <version>1.0.0-SNAPSHOT</version>
+     <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.android</groupId>
@@ -149,6 +158,32 @@
   <build>
     <finalName>${project.artifactId}</finalName>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.2</version>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+              <keyname>48E407CA</keyname>
+              <passphraseServerId>48E407CA</passphraseServerId>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
