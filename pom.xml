@@ -4,7 +4,7 @@
 
   <groupId>org.beigesoft</groupId>
   <artifactId>beige-graphic-android</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   
   <name>Beigesoft graphic Android delegators library.</name>
   <description>This is delegators that implements graphic logic (read image from file...) with Android.</description>
@@ -271,7 +271,7 @@
     <url>https://github.com/demidenko05/beige-graphic-android.git</url>
     <connection>scm:git:git@github.com:demidenko05/beige-graphic-android.git</connection>
     <developerConnection>scm:git:git@github.com:demidenko05/beige-graphic-android.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>beige-graphic-android-1.0.0</tag>
   </scm>
 
 </project>
