@@ -24,7 +24,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>2.2.1</version>
+            <version>3.2.0</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -37,7 +37,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.10.2</version>
+            <version>3.2.0</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -45,7 +45,31 @@
                   <goal>jar</goal>
                 </goals>
                 <configuration>
-                  <additionalparam>-Xdoclint:none</additionalparam>
+                  <doclint>none</doclint>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <id>signing</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>verify</phase>
+                <inherited>true</inherited>
+                <configuration>
+                  <archiveDirectory />
+                  <includes>
+                    <include>target${file.separator}*.jar</include>
+                  </includes>
+                  <storepass>${signpass}</storepass>
+                  <keypass>${signpass}</keypass>
+                  <alias>${signalias}</alias>
                 </configuration>
               </execution>
             </executions>
@@ -62,8 +86,8 @@
                   <goal>sign</goal>
                 </goals>
                 <configuration>
-                  <keyname>48E407CA</keyname>
-                  <passphraseServerId>48E407CA</passphraseServerId>
+                  <keyname>${gpgkeyname}</keyname>
+                  <passphraseServerId>${gpgkeyname}</passphraseServerId>
                 </configuration>
               </execution>
             </executions>
@@ -78,7 +102,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>2.17</version>
+            <version>3.1.1</version>
             <executions>
               <execution>
               <id>checkstyle</id>
@@ -94,16 +118,16 @@
             </configuration>
           </plugin>
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>3.0.3</version>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <version>4.0.4</version>
             <configuration>
               <excludeFilterFile>findbug-exclude.xml</excludeFilterFile>
             </configuration>
             <executions>
               <execution>
-              <id>findbugs</id>
-              <phase>compile</phase>
+              <id>spotbugs</id>
+              <phase>verify</phase>
               <goals>
                 <goal>check</goal>
               </goals>
@@ -113,7 +137,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
-            <version>3.6</version>
+            <version>3.13.0</version>
             <configuration>
               <printFailingErrors>true</printFailingErrors>
               <excludes>
@@ -139,19 +163,13 @@
     <dependency>
      <groupId>org.beigesoft</groupId>
      <artifactId>beige-docwriter</artifactId>
-     <version>1.0.0</version>
+     <version>1.0.3</version>
     </dependency>
     <dependency>
       <groupId>com.google.android</groupId>
       <artifactId>android</artifactId>
       <version>4.1.1.4</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-     <groupId>junit</groupId>
-     <artifactId>junit</artifactId>
-     <version>4.12</version>
-     <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -160,48 +178,23 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.2</version>
-        <configuration>
-          <additionalparam>-Xdoclint:none</additionalparam>
-        </configuration>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>3.0.0-M1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-            <configuration>
-              <keyname>48E407CA</keyname>
-              <passphraseServerId>48E407CA</passphraseServerId>
-            </configuration>
-          </execution>
-        </executions>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.0.0-M1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.7</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.19.1</version>
-        <configuration>
-          <useFile>false</useFile>
-          <trimStackTrace>false</trimStackTrace>
-        </configuration>
+        <version>3.2.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.8.1</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
@@ -214,16 +207,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
-        <configuration>
-          <useReleaseProfile>false</useReleaseProfile>
-          <arguments>-Prelease</arguments>
-        </configuration>
+        <version>3.0.0-M1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.3.0</version>
         <inherited>false</inherited>
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
